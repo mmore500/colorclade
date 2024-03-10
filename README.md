@@ -6,6 +6,7 @@
 ](https://github.com/mmore500/colorclade/actions)
 [
 ![GitHub stars](https://img.shields.io/github/stars/mmore500/colorclade.svg?style=round-square&logo=github&label=Stars&logoColor=white)](https://github.com/mmore500/colorclade)
+[![DOI](https://zenodo.org/badge/770006855.svg)](https://zenodo.org/doi/10.5281/zenodo.10802404)
 
 **_colorclade_** draws phylogenies with hierarchical coloring for
 easier visual comparison
@@ -59,8 +60,8 @@ If colorclade contributes to a scientific publication, please cite it as
   month = mar,
   year = 2024,
   publisher = {Zenodo},
-  doi = {TODO},
-  url = {TODO}
+  doi = {10.5281/zenodo.10802404},
+  url = {https://zenodo.org/doi/10.5281/zenodo.10802404}
 }
 ```
 
