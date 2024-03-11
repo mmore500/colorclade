@@ -3,7 +3,7 @@ import random
 import typing
 
 
-def val_to_color(
+def val_to_color_muted(
     val: typing.Any,
     salt: typing.Optional[int] = None,
     saturation: float = 1.0,

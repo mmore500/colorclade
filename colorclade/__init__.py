@@ -12,4 +12,6 @@ from ._draw_colorclade_tree import draw_colorclade_tree
 __all__ = [
     "draw_colorclade_tree",
     "biopython_draw_colorclade_tree",
+    "val_to_color_hls",
+    "val_to_color_muted",
 ]

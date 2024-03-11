@@ -24,6 +24,7 @@ def biopython_draw_colorclade_tree(
     max_leaves: typing.Optional[int] = None,
     salt_color: typing.Optional[int] = None,
     use_branch_lengths: bool = True,
+    val_to_color: typing.Optional[typing.Callable] = None,
 ) -> mpl_Axes:
 
     biopy_tree = copy.deepcopy(tree)
@@ -35,7 +36,7 @@ def biopython_draw_colorclade_tree(
         biopy_tree = pare_tree(biopy_tree, max_leaves)
 
     sort_tree(biopy_tree.root)
-    color_tree(biopy_tree.root, salt=salt_color)
+    color_tree(biopy_tree.root, salt=salt_color, val_to_color=val_to_color)
 
     if isinstance(ax, abc.Sequence):
         _fig, ax = plt.subplots(figsize=fig_size, squeeze=True)
