@@ -25,6 +25,7 @@ dependencies = [
   "matplotlib",
   "numpy",
   "opytional",
+  "seaborn",
 ]
 
 [project.readme]
@@ -44,7 +45,6 @@ dev = [
     "isort==5.12.0",
     "pip-tools==7.3.0",
     "pytest==6.2.5",
-    "seaborn==0.13.0",
     "ruff==0.1.11",
 ]
 
