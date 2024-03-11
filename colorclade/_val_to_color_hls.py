@@ -1,6 +1,7 @@
 import random
-import seaborn as sns
 import typing
+
+import seaborn as sns
 
 
 def val_to_color_hls(
