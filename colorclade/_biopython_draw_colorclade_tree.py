@@ -25,7 +25,56 @@ def biopython_draw_colorclade_tree(
     use_branch_lengths: bool = True,
     val_to_color: typing.Optional[typing.Callable] = None,
 ) -> mpl_Axes:
+    """Draw a phylogenetic tree from Biopython Tree, color-coding clades based
+    on descendant labels.
 
+    Labels are mapped to colors using a hash function. Color-coding uses an
+    arbitrarily dominant color among the labels of the clade's descendants. The
+    criteria used to determine dominance is deterministic, but arbitrary.
+
+    Parameters
+    ----------
+    tree : BioPhylo.BaseTree
+        The phylogenetic tree object to be visualized.
+    ax : plt.Axes, tuple, or None, optional
+        The matplotlib Axes object to draw on.
+
+        If a tuple, it is interpreted as the size of the figure to create
+        (width, height) in inches. If None, `plt.gca()` is used.
+    drop_overlapping_labels : bool, default False
+        If True, overlapping labels will be removed to improve clarity.
+    ax : tuple or None, optional
+        The size of the figure to create (width, height) in inches. Ignored if
+        `ax` is provided.
+    label_tips : bool, default True
+        If True, the tips of the tree will be labeled with their respective
+        names.
+    line_width : float, default 4.0
+        The width of the lines used to draw the tree.
+    max_leaves : int or None, optional
+        The maximum number of leaves to display.
+
+        If the tree has more leaves, an arbitrary subset of the leaves will be
+        displayed.
+    salt_color : int or None, optional
+        An optional integer to seed the random color generator for clade
+        coloring.
+
+        Useful to generate alternate colorings to find one that is visually
+        appealing.
+    use_branch_lengths : bool, default True
+        If True, branch lengths are used to layout the tree. If False, tree is
+        displayed as a cladogram.
+    val_to_color : Callable or None, optional
+        A function mapping each node's value to a color.
+
+        If None, default coloring is applied.
+
+    Returns
+    -------
+    mpl_Axes
+        The matplotlib Axes object with the tree drawn.
+    """
     biopy_tree = copy.deepcopy(tree)
     if not use_branch_lengths:
         for clade in biopy_tree.find_clades(order="postorder"):
@@ -56,9 +105,9 @@ def biopython_draw_colorclade_tree(
         if drop_overlapping_labels:
             matplotlib_drop_overlapping_labels(ax)
 
+        # Remove axes borders except for bottom, and remove y-axis tick/labels
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
-
         ax.spines["left"].set_visible(False)
         ax.set_yticklabels([])
         ax.set_yticks([])
