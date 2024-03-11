@@ -18,7 +18,6 @@ def biopython_draw_colorclade_tree(
     tree: BioPhylo.BaseTree,
     ax: typing.Union[plt.Axes, tuple, None] = None,
     drop_overlapping_labels: bool = False,
-    fig_size: typing.Optional[tuple] = None,
     label_tips: bool = True,
     line_width: float = 4.0,
     max_leaves: typing.Optional[int] = None,
@@ -39,7 +38,7 @@ def biopython_draw_colorclade_tree(
     color_tree(biopy_tree.root, salt=salt_color, val_to_color=val_to_color)
 
     if isinstance(ax, abc.Sequence):
-        _fig, ax = plt.subplots(figsize=fig_size, squeeze=True)
+        _fig, ax = plt.subplots(figsize=ax, squeeze=True)
     elif ax is None:
         ax = plt.gca()
     elif not isinstance(ax, plt.Axes):
