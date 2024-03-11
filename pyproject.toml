@@ -1,6 +1,6 @@
 [project]
 name = "colorclade"
-version = "0.1.0"
+version = "0.2.0"
 description = "colorclade draws phylogenies with hierarchical coloring for easier visual comparison."
 authors = [
     { name = "Matthew Andres Moreno", email = "m.more500@gmail.com" },
