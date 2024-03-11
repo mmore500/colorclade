@@ -102,15 +102,16 @@ def biopython_draw_colorclade_tree(
             ),
             do_show=False,
         )
-        if drop_overlapping_labels:
-            matplotlib_drop_overlapping_labels(ax)
 
-        # Remove axes borders except for bottom, and remove y-axis tick/labels
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(False)
-        ax.set_yticklabels([])
-        ax.set_yticks([])
-        ax.axes.get_yaxis().set_visible(False)
+    if drop_overlapping_labels:
+        matplotlib_drop_overlapping_labels(ax)
+
+    # Remove axes borders except for bottom, and remove y-axis tick/labels
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.set_yticklabels([])
+    ax.set_yticks([])
+    ax.axes.get_yaxis().set_visible(False)
 
     return ax
