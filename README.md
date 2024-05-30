@@ -51,7 +51,7 @@ See `tests/test_draw_colorclade_tree.py` for full example code.
 
 If colorclade contributes to a scientific publication, please cite it as
 
-> Matthew Andres Moreno. (2024). mmore500/colorclade. Zenodo. TODO
+> Matthew Andres Moreno. (2024). mmore500/colorclade. Zenodo. https://doi.org/10.5281/zenodo.10802404
 
 ```bibtex
 @software{moreno2024colorclade,
