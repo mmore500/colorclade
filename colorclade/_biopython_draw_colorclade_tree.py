@@ -3,7 +3,7 @@ import copy
 import typing
 
 from Bio import Phylo as BioPhylo
-from Bio.Phylo.BaseTree import Clade
+from Bio.Phylo.BaseTree import Clade as BioClade
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes as mpl_Axes
 
