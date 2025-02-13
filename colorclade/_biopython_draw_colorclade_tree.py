@@ -47,7 +47,7 @@ def biopython_draw_colorclade_tree(
     drop_overlapping_labels : bool, default False
         If True, overlapping labels will be removed to improve clarity.
     label_tips : callable or bool, default True
-        If a callable, then `label_tips` will be called on each tip node 
+        If a callable, then `label_tips` will be called on each tip node
         to determine if it should be labeled. If True, all tips of the tree
         will be labeled with their respective names.
     color_labels : callable or str, default "black"
