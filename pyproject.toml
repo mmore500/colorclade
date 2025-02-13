@@ -46,6 +46,7 @@ dev = [
     "pip-tools==7.3.0",
     "pytest==6.2.5",
     "ruff==0.1.11",
+    "teeplot==1.2.0",
 ]
 
 [tool.setuptools]
