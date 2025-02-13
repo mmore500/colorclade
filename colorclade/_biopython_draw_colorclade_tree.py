@@ -81,12 +81,14 @@ def biopython_draw_colorclade_tree(
         The matplotlib Axes object with the tree drawn.
     """
     if isinstance(label_tips, bool):
-        if label_tips:
-            label_tips = lambda node: node.name or ""
-        else:
-            label_tips = lambda _: ""
+        # kwarg prevents unexpected late-binding behavior
+        def label_tips(node: BioClade, label_tips=label_tips) -> str:
+            return node.name or "" if label_tips else ""
+
     if isinstance(color_labels, str):
-        color_labels = lambda _, color_labels=color_labels: color_labels
+        # kwarg prevents unexpected late-binding behavior
+        def color_labels(_: BioClade, color_labels=color_labels) -> str:
+            return color_labels
 
     biopy_tree = copy.deepcopy(tree)
     if not use_branch_lengths:
