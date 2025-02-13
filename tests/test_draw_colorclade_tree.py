@@ -29,7 +29,7 @@ def save_plot(f: typing.Callable):
 
 @pytest.mark.parametrize(
     "label_tips",
-    [True, lambda _: random.random() < 0.7],
+    [True, False, lambda node: node.name if random.random() < 0.7 else ""],
 )
 @pytest.mark.parametrize(
     "color_labels",

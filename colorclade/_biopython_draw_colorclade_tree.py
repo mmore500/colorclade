@@ -3,6 +3,7 @@ import copy
 import typing
 
 from Bio import Phylo as BioPhylo
+from Bio.Phylo.BaseTree import Clade
 from matplotlib import pyplot as plt
 from matplotlib.axes import Axes as mpl_Axes
 
@@ -19,8 +20,8 @@ def biopython_draw_colorclade_tree(
     ax: typing.Union[plt.Axes, tuple, None] = None,
     *,
     drop_overlapping_labels: bool = False,
-    label_tips: typing.Union[typing.Callable[[object],  bool], bool] = True,
-    color_labels: typing.Union[typing.Callable[[object], str], str] = "black",
+    label_tips: typing.Union[typing.Callable[[Clade], str], bool] = True,
+    color_labels: typing.Union[typing.Callable[[str], str], str] = "black",
     line_width: float = 4.0,
     max_leaves: typing.Optional[int] = None,
     salt_color: typing.Optional[int] = None,
@@ -46,12 +47,12 @@ def biopython_draw_colorclade_tree(
     drop_overlapping_labels : bool, default False
         If True, overlapping labels will be removed to improve clarity.
     label_tips : callable or bool, default True
-        If a callable, then `label_tips` will be called on each tip name 
-        to determine if it should be labeled. If True, all tips of the tree
+        If a callable, then `label_tips` will be called on each tip name
+        to determine what the label should be. If True, all tips of the tree
         will be labeled with their respective names.
     color_labels : callable or str, default "black"
-        If a callable, then `color_labels` will be called on each tip name 
-        to determine what color it will be labeled with. If a string, it is 
+        If a callable, then `color_labels` will be called on each tip name
+        to determine what color it will be labeled with. If a string, it is
         interpreted directly as a color.
     line_width : float, default 4.0
         The width of the lines used to draw the tree.
@@ -80,11 +81,12 @@ def biopython_draw_colorclade_tree(
         The matplotlib Axes object with the tree drawn.
     """
     if isinstance(label_tips, bool):
-        label_tips_val = label_tips
-        label_tips = lambda _: label_tips_val
-    if isinstance(color_labels, str ):
-        color_labels_val = color_labels
-        color_labels = lambda _: color_labels_val
+        if label_tips:
+            label_tips = lambda node: node.name or ""
+        else:
+            label_tips = lambda _: ""
+    if isinstance(color_labels, str):
+        color_labels = lambda _, color_labels=color_labels: color_labels
 
     biopy_tree = copy.deepcopy(tree)
     if not use_branch_lengths:
@@ -103,13 +105,14 @@ def biopython_draw_colorclade_tree(
         ax = plt.gca()
     elif not isinstance(ax, plt.Axes):
         raise TypeError(f"ax must be a Axes instance or tuple, not {type(ax)}")
+    ax: plt.Axes  # ax has now been converted to a plt.Axes object
 
     with plt.rc_context({"lines.linewidth": line_width}):
         BioPhylo.draw(
             biopy_tree,
             axes=ax,
             label_func=lambda node: (
-                node.name if label_tips(node) and node.is_terminal() else ""
+                label_tips(node) if node.is_terminal() else ""
             ),
             label_colors=color_labels,
             do_show=False,
@@ -119,7 +122,6 @@ def biopython_draw_colorclade_tree(
         matplotlib_drop_overlapping_labels(ax)
 
     # Remove axes borders except for bottom, and remove y-axis tick/labels
-    ax: plt.Axes
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
