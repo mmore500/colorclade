@@ -18,7 +18,7 @@ def biopython_draw_colorclade_tree(
     tree: BioPhylo.BaseTree,
     ax: typing.Union[plt.Axes, tuple, None] = None,
     drop_overlapping_labels: bool = False,
-    label_tips: bool = True,
+    label_tips: typing.Union[typing.Callable[[],  bool], bool] = True,
     line_width: float = 4.0,
     max_leaves: typing.Optional[int] = None,
     salt_color: typing.Optional[int] = None,
@@ -75,6 +75,9 @@ def biopython_draw_colorclade_tree(
     mpl_Axes
         The matplotlib Axes object with the tree drawn.
     """
+    if isinstance(label_tips, bool):
+        label_tips = lambda: label_tips
+
     biopy_tree = copy.deepcopy(tree)
     if not use_branch_lengths:
         for clade in biopy_tree.find_clades(order="postorder"):
@@ -98,7 +101,7 @@ def biopython_draw_colorclade_tree(
             biopy_tree,
             axes=ax,
             label_func=lambda node: (
-                node.name if label_tips and node.is_terminal() else ""
+                node.name if label_tips() and node.is_terminal() else ""
             ),
             do_show=False,
         )
