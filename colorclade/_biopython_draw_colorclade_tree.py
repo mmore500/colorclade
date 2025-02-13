@@ -20,7 +20,7 @@ def biopython_draw_colorclade_tree(
     ax: typing.Union[plt.Axes, tuple, None] = None,
     *,
     drop_overlapping_labels: bool = False,
-    label_tips: typing.Union[typing.Callable[[Clade], str], bool] = True,
+    label_tips: typing.Union[typing.Callable[[BioClade], str], bool] = True,
     color_labels: typing.Union[typing.Callable[[str], str], str] = "black",
     line_width: float = 4.0,
     max_leaves: typing.Optional[int] = None,
