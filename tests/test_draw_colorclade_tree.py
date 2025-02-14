@@ -1,10 +1,42 @@
+import functools
+import random
+import typing
+
 from matplotlib import pyplot as plt
 import pandas as pd
+import pytest
+from teeplot import teeplot as tp
 
 from colorclade import draw_colorclade_tree
 
 
-def test_draw_colorclade_tree():
+def save_plot(f: typing.Callable):
+    @functools.wraps(f)
+    def inner(*args, **kwargs):
+        tp.tee(
+            f,
+            *args,
+            teeplot_outattrs={
+                k: "lambda" if isinstance(v, typing.Callable) else v
+                for k, v in kwargs.items()
+            },
+            teeplot_outdir="/tmp",
+            **kwargs,
+        )
+
+    return inner
+
+
+@pytest.mark.parametrize(
+    "label_tips",
+    [True, False, lambda node: node.name if random.random() < 0.7 else ""],
+)
+@pytest.mark.parametrize(
+    "color_labels",
+    ["black", lambda _: random.choice(["blue", "red", "green"])],
+)
+@save_plot
+def test_draw_colorclade_tree(label_tips, color_labels):
     alifestd_df1 = pd.DataFrame(
         {
             "id": [0, 1, 2, 3, 4],
@@ -43,6 +75,8 @@ def test_draw_colorclade_tree():
         taxon_name_key="taxon",
         ax=axes.flat[0],
         backend="biopython",
+        label_tips=label_tips,
+        color_labels=color_labels,
     )
     draw_colorclade_tree(
         alifestd_df2,
@@ -54,5 +88,3 @@ def test_draw_colorclade_tree():
     axes.flat[1].set_xlim(reversed(axes.flat[1].get_xlim()))
     fig.set_size_inches(7, 2.5)
     plt.tight_layout()
-
-    plt.savefig("/tmp/test_draw_colorclade_tree.png")

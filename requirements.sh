@@ -1,8 +1,7 @@
-#!/usr/bin/bash
+#!/bin/bash
 
-set -e
-set -u
+set -euo pipefail
 
 cd "$(dirname "$0")"
 
-python3.8 -m piptools compile "pyproject.toml" --extra "dev"
+python3 -m uv pip compile "pyproject.toml" --python=3.8 --extra "dev" > requirements.txt
